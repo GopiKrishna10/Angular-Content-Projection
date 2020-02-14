@@ -27,11 +27,11 @@ export class ConsumingHttpComponent implements OnInit {
     input.value = '';
     this.service.create(user)
     .subscribe((response) => {
-      user['id'] = response.id;
+      user['id'] = response['id'];
       (this.users as any).splice(0, 0, user);
     },(error: AppError) => {
       if(error instanceof BadInput){
-        alert ('an Error',error.originalError);
+        console.log('an Error',error.originalError);
       }else{
         throw error; // we need to rethrow it so it will hit the global error Handler Method in appErrorHandler 
       }
@@ -44,8 +44,8 @@ export class ConsumingHttpComponent implements OnInit {
   //     (this.users as any).splice(0, 0, post);
   //   })
   // }
-  delete(post) {
-    this.service.deletePost(post).subscribe((response) => {
+  deletePost(post) {
+    this.service.delete(post).subscribe((response) => {
       let index = this.users.indexOf(post);
       this.users.splice(index, 1);
 

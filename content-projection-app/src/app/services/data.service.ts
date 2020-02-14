@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders,HttpErrorResponse } from '@angular/common/http';
 import {catchError,map } from 'rxjs/operators';
 import {Observable,throwError } from 'rxjs';
 import {AppError} from '../common/app-error';
@@ -16,25 +16,27 @@ export class DataService {
   }
   create(resource){
     return this.http.post(this.url, resource).pipe(
-      catchError(this.handleError(error)),
+      catchError((error:HttpErrorResponse) => {
+         this.handleError(error);
+    })
     );
   }
-  deletePost(post){
+  delete(post){
     return this.http.delete(this.url + '/' + post.id).pipe(
-        map(response => resonse),
-       catchError((error:Response) => {
+        map(response => response),
+       catchError((error:HttpErrorResponse) => {
          this.handleError(error);
     })
     )
    
   }
-   private handleError(error: Response){
+   private handleError(error: HttpErrorResponse){
       if(error.status === 400){
-        return Observable.throwError(new BadInput(error));
+        return throwError(new BadInput(error));
       }
        if(error.status === 404){
-        return Observable.throwError(new NotFoundError(error));
+        return throwError(new NotFoundError(error));
       }      
-       return Observable.throwError(new AppError(error));
+       return throwError(new AppError(error));
   }
 }
