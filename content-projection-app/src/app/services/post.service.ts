@@ -5,7 +5,7 @@ import {DataService } from './data.service'
 export class PostService extends DataService{
     // private url = 'https://my-json-server.typicode.com/typicode/demo/posts';
   constructor(http: HttpClient) {
-    super('https://my-json-server.typicode.com/typicode/demo/posts',http);
+    super(http);
    }
 
 }

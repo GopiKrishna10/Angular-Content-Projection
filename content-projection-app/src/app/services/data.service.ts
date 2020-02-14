@@ -9,8 +9,8 @@ import {BadInput} from '../common/bad-input';
   providedIn: 'root'
 })
 export class DataService {
-
-  constructor(private url:string, private http: HttpClient) { }
+    private url = 'https://my-json-server.typicode.com/typicode/demo/posts';
+  constructor(private http: HttpClient) { }
   getAll(){
     return this.http.get(this.url);
   }
