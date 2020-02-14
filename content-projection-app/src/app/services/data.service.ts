@@ -16,17 +16,13 @@ export class DataService {
   }
   create(resource){
     return this.http.post(this.url, resource).pipe(
-      catchError((error:HttpErrorResponse) => {
-         this.handleError(error);
-    })
+      catchError(this.handleError)
     );
   }
   delete(post){
     return this.http.delete(this.url + '/' + post.id).pipe(
         map(response => response),
-       catchError((error:HttpErrorResponse) => {
-         this.handleError(error);
-    })
+       catchError(this.handleError)
     )
    
   }
